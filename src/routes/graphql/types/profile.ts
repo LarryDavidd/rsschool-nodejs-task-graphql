@@ -7,27 +7,9 @@ import {
 } from 'graphql';
 import { MemberTypeIdEnum, MemberType } from './member.js';
 import { UUIDType } from './uuid.js';
-import { PrismaClient } from '@prisma/client';
-import { MemberTypeId } from '../../member-types/schemas.js';
+import { Id, Prisma, DataRecord, IProfileInput } from '../types/common.js';
 
-type Prisma = {
-  prisma: PrismaClient;
-};
-
-type DataRecord = Record<string | number | symbol, never>;
-
-export interface IProfileInput {
-  isMale: boolean;
-  yearOfBirth: number;
-  memberTypeId: MemberTypeId;
-  userId: string;
-}
-
-export type typeId = {
-  id: string;
-};
-
-export interface IProfile extends typeId, IProfileInput {}
+export interface IProfile extends Id, IProfileInput {}
 
 export const ProfileType = new GraphQLObjectType({
   name: 'profiles',

@@ -1,19 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-type Id = {
-  id: string;
-};
-
-type Prisma = {
-  prisma: PrismaClient;
-};
-
-interface IUserInput {
-  name: string;
-  balance: number;
-}
-
-type DataRecord = Record<string | number | symbol, never>;
+import { Id, Prisma, DataRecord, IUserInput } from '../types/common.js';
 
 const getUser = async ({ id }: Id, { prisma }: Prisma) => {
   return await prisma.user.findUnique({ where: { id } });

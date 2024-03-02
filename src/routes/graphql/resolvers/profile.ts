@@ -1,21 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-type Id = {
-  id: string;
-};
-
-type Prisma = {
-  prisma: PrismaClient;
-};
-
-export interface IProfileInput {
-  isMale: boolean;
-  yearOfBirth: number;
-  memberTypeId: string;
-  userId: string;
-}
-
-export type DataRecord = Record<string | number | symbol, never>;
+import { Id, Prisma, DataRecord, IProfileInput } from '../types/common.js';
 
 const getProfile = async ({ id }: Id, { prisma }: Prisma) => {
   const profile = await prisma.profile.findUnique({ where: { id } });
