@@ -3,6 +3,7 @@ import { createGqlResponseSchema, gqlResponseSchema, schema } from './schemas.js
 import userResolver from './resolvers/user.js';
 import profileResolver from './resolvers/profile.js';
 import memberResolver from './resolvers/member.js';
+import memberPost from './resolvers/post.js';
 
 import { graphql, parse, validate } from 'graphql';
 
@@ -34,6 +35,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
           ...userResolver,
           ...profileResolver,
           ...memberResolver,
+          ...memberPost,
         },
         variableValues: variables,
         contextValue: { prisma },

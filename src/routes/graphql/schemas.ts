@@ -10,6 +10,7 @@ import { UUIDType } from './types/uuid.js';
 import { UserType, CreateUserInputType, ChangeUserInputType } from './types/user.js';
 import { ChangeProfileInput, CreateProfileInput, ProfileType } from './types/profile.js';
 import { MemberType, MemberTypeIdEnum } from './types/member.js';
+import { ChangePostInput, CreatePostInput, PostType } from './types/post.js';
 
 export const gqlResponseSchema = Type.Partial(
   Type.Object({
@@ -57,6 +58,14 @@ const query = new GraphQLObjectType({
     },
     profiles: {
       type: new GraphQLList(ProfileType),
+      args: {},
+    },
+    post: {
+      type: PostType,
+      args: { id: { type: UUIDType } },
+    },
+    posts: {
+      type: new GraphQLList(PostType),
       args: {},
     },
   },
@@ -115,6 +124,25 @@ const mutation = new GraphQLObjectType({
       args: {
         userId: { type: UUIDType },
         authorId: { type: UUIDType },
+      },
+    },
+    createPost: {
+      type: PostType,
+      args: {
+        dto: { type: CreatePostInput },
+      },
+    },
+    deletePost: {
+      type: UUIDType,
+      args: {
+        id: { type: UUIDType },
+      },
+    },
+    changePost: {
+      type: PostType,
+      args: {
+        id: { type: UUIDType },
+        dto: { type: ChangePostInput },
       },
     },
   },

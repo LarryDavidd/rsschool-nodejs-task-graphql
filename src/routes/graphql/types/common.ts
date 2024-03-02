@@ -22,7 +22,13 @@ export interface IUserInput {
   balance: number;
 }
 
-export type ISubscriptionInput = {
+export interface ISubscriptionInput {
   userId: string;
   authorId: string;
-};
+}
+
+export interface IPostInput {
+  title: string;
+  content: string;
+  authorId: string;
+}
