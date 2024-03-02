@@ -1,5 +1,11 @@
 import { Type } from '@fastify/type-provider-typebox';
-import { GraphQLNonNull, GraphQLObjectType, GraphQLSchema, GraphQLList } from 'graphql';
+import {
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLList,
+  GraphQLString,
+} from 'graphql';
 import { UUIDType } from './types/uuid.js';
 import { UserType, CreateUserInputType, ChangeUserInputType } from './types/user.js';
 import { ChangeProfileInput, CreateProfileInput, ProfileType } from './types/profile.js';
@@ -28,7 +34,7 @@ const query = new GraphQLObjectType({
   name: 'Query',
   fields: {
     user: {
-      type: UserType,
+      type: new GraphQLList(UserType),
       args: {
         id: { type: new GraphQLNonNull(UUIDType) },
       },
@@ -95,6 +101,20 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: UUIDType },
         dto: { type: ChangeProfileInput },
+      },
+    },
+    subscribeTo: {
+      type: UserType,
+      args: {
+        userId: { type: UUIDType },
+        authorId: { type: UUIDType },
+      },
+    },
+    unsubscribeFrom: {
+      type: GraphQLString,
+      args: {
+        userId: { type: UUIDType },
+        authorId: { type: UUIDType },
       },
     },
   },

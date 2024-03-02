@@ -21,3 +21,8 @@ export interface IUserInput {
   name: string;
   balance: number;
 }
+
+export type ISubscriptionInput = {
+  userId: string;
+  authorId: string;
+};
