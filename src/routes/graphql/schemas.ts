@@ -2,6 +2,8 @@ import { Type } from '@fastify/type-provider-typebox';
 import { GraphQLNonNull, GraphQLObjectType, GraphQLSchema, GraphQLList } from 'graphql';
 import { UUIDType } from './types/uuid.js';
 import { UserType, CreateUserInputType, ChangeUserInputType } from './types/user.js';
+import { ChangeProfileInput, CreateProfileInput, ProfileType } from './types/profile.js';
+import { MemberType, MemberTypeIdEnum } from './types/member.js';
 
 export const gqlResponseSchema = Type.Partial(
   Type.Object({
@@ -35,6 +37,22 @@ const query = new GraphQLObjectType({
       type: new GraphQLList(UserType),
       args: {},
     },
+    memberType: {
+      type: MemberType,
+      args: { id: { type: MemberTypeIdEnum } },
+    },
+    memberTypes: {
+      type: new GraphQLList(MemberType),
+      args: {},
+    },
+    profile: {
+      type: ProfileType,
+      args: { id: { type: UUIDType } },
+    },
+    profiles: {
+      type: new GraphQLList(ProfileType),
+      args: {},
+    },
   },
 });
 
@@ -58,6 +76,25 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: UUIDType },
         dto: { type: ChangeUserInputType },
+      },
+    },
+    createProfile: {
+      type: ProfileType,
+      args: {
+        dto: { type: CreateProfileInput },
+      },
+    },
+    deleteProfile: {
+      type: UUIDType,
+      args: {
+        id: { type: UUIDType },
+      },
+    },
+    changeProfile: {
+      type: ProfileType,
+      args: {
+        id: { type: UUIDType },
+        dto: { type: ChangeProfileInput },
       },
     },
   },

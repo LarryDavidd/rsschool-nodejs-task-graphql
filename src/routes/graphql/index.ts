@@ -2,6 +2,7 @@ import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { createGqlResponseSchema, gqlResponseSchema, schema } from './schemas.js';
 import userResolver from './resolvers/user.js';
 import profileResolver from './resolvers/profile.js';
+import memberResolver from './resolvers/member.js';
 
 import { graphql, parse, validate } from 'graphql';
 
@@ -32,6 +33,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         rootValue: {
           ...userResolver,
           ...profileResolver,
+          ...memberResolver,
         },
         variableValues: variables,
         contextValue: { prisma },

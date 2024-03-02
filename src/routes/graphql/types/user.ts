@@ -5,6 +5,10 @@ import {
   GraphQLString,
 } from 'graphql';
 import { UUIDType } from './uuid.js';
+import { ProfileType } from './profile.js';
+import { DataRecord, Id, Prisma, IUserInput } from './common.js';
+
+export interface IUser extends Id, IUserInput {}
 
 export const UserType = new GraphQLObjectType({
   name: 'users',
@@ -17,6 +21,13 @@ export const UserType = new GraphQLObjectType({
     },
     balance: {
       type: GraphQLFloat,
+    },
+    profile: {
+      type: ProfileType,
+      resolve: async (source: IUser, _: DataRecord, { prisma }: Prisma) =>
+        await prisma.profile.findFirst({
+          where: { userId: source.id },
+        }),
     },
   }),
 });
